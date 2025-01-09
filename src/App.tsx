@@ -1,24 +1,23 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Invoices from "./pages/Invoices";
+import DailyRates from "./pages/DailyRates";
+import Reimbursements from "./pages/Reimbursements";
+import Reports from "./pages/Reports";
+import "./App.css";
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/invoices" element={<Invoices />} />
+        <Route path="/daily-rates" element={<DailyRates />} />
+        <Route path="/reimbursements" element={<Reimbursements />} />
+        <Route path="/reports" element={<Reports />} />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;
