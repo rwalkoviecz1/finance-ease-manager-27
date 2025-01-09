@@ -8,7 +8,7 @@ import {
   FileText,
 } from "lucide-react";
 
-const AppSidebar = () => {
+export const AppSidebar = () => {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -87,5 +87,3 @@ const AppSidebar = () => {
     </div>
   );
 };
-
-export default AppSidebar;
