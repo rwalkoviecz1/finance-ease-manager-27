@@ -1,6 +1,16 @@
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { ReimbursementForm } from "@/components/reimbursements/ReimbursementForm";
+import { ReimbursementTable } from "@/components/reimbursements/ReimbursementTable";
+import { Reimbursement } from "@/types/reimbursement";
 
 const Reimbursements = () => {
+  const [reimbursements, setReimbursements] = useState<Reimbursement[]>([]);
+
+  const handleSubmit = (data: Reimbursement) => {
+    setReimbursements((prev) => [data, ...prev]);
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -11,11 +21,14 @@ const Reimbursements = () => {
           </p>
         </div>
         
-        {/* TODO: Implementar formulário de cadastro e listagem de reembolsos */}
-        <div className="rounded-lg border p-4">
-          <p className="text-muted-foreground">
-            Em breve: Formulário para cadastro de reembolsos e listagem dos registros.
-          </p>
+        <div className="space-y-6">
+          <div className="rounded-lg border p-4">
+            <ReimbursementForm onSubmit={handleSubmit} />
+          </div>
+
+          <div className="rounded-lg border">
+            <ReimbursementTable reimbursements={reimbursements} />
+          </div>
         </div>
       </div>
     </Layout>
