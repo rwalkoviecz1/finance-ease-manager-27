@@ -6,7 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/date-picker";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 import {
   BarChart,
   Bar,
@@ -106,16 +109,36 @@ export function DashboardCharts({
           </SelectContent>
         </Select>
         <div className="flex gap-2">
-          <DatePicker
-            selected={startDate}
-            onSelect={setStartDate}
-            placeholderText="Data inicial"
-          />
-          <DatePicker
-            selected={endDate}
-            onSelect={setEndDate}
-            placeholderText="Data final"
-          />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">
+                {startDate ? format(startDate, "dd/MM/yyyy") : "Data inicial"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={startDate}
+                onSelect={setStartDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">
+                {endDate ? format(endDate, "dd/MM/yyyy") : "Data final"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={endDate}
+                onSelect={setEndDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 
@@ -126,11 +149,7 @@ export function DashboardCharts({
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar
-            dataKey="value"
-            fill="#8884d8"
-            name="Valor Total"
-          />
+          <Bar dataKey="value" fill="#8884d8" name="Valor Total" />
         </BarChart>
       </div>
     </div>
