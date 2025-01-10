@@ -1,6 +1,8 @@
-import { Card } from "@/components/ui/card";
 import { Layout } from "@/components/Layout";
+import { Card } from "@/components/ui/card";
+import { DashboardCharts } from "@/components/dashboard/DashboardCharts";
 import { ArrowDownIcon, ArrowUpIcon, CarIcon, WalletIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const stats = [
   {
@@ -9,6 +11,7 @@ const stats = [
     change: "+4.75%",
     changeType: "positive",
     icon: ArrowDownIcon,
+    path: "/invoices",
   },
   {
     name: "Notas de Saída",
@@ -16,6 +19,7 @@ const stats = [
     change: "-2.25%",
     changeType: "negative",
     icon: ArrowUpIcon,
+    path: "/invoices",
   },
   {
     name: "Diárias",
@@ -23,6 +27,7 @@ const stats = [
     change: "+12.5%",
     changeType: "positive",
     icon: CarIcon,
+    path: "/daily-rates",
   },
   {
     name: "Reembolsos",
@@ -30,10 +35,20 @@ const stats = [
     change: "-0.5%",
     changeType: "negative",
     icon: WalletIcon,
+    path: "/reimbursements",
   },
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  // Mock data - in a real application, this would come from your backend
+  const mockData = {
+    invoices: [],
+    dailyRates: [],
+    reimbursements: [],
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -46,7 +61,11 @@ const Index = () => {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
-            <Card key={stat.name} className="p-6">
+            <Card
+              key={stat.name}
+              className="p-6 cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate(stat.path)}
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
@@ -81,6 +100,15 @@ const Index = () => {
               </div>
             </Card>
           ))}
+        </div>
+
+        <div className="rounded-lg border p-6">
+          <h2 className="text-xl font-semibold mb-4">Análise Detalhada</h2>
+          <DashboardCharts
+            invoices={mockData.invoices}
+            dailyRates={mockData.dailyRates}
+            reimbursements={mockData.reimbursements}
+          />
         </div>
       </div>
     </Layout>
