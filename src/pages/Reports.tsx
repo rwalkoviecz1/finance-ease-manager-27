@@ -21,8 +21,18 @@ EMPRESA/MOTORISTA              TIPO DOCUMENTO              NÚMERO/QUANTIDADE
 ──────────────────────────────────────────────────────────────────────────────────
 
 // Aqui seriam listados os dados...
+
+
+──────────────────────────────────────────────────────────────────────────────────
+
+Data e hora da impressão: ${formattedDate}
+
+
+Recebido por: __________________
+              Nome e assinatura
 `;
 
+    // Create a blob and trigger download
     const blob = new Blob([reportContent], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
