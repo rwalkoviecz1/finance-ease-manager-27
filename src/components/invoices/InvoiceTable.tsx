@@ -7,13 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Invoice } from "@/types/invoice";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { InfoIcon } from "lucide-react";
 
 interface InvoiceTableProps {
   invoices: Invoice[];
@@ -43,13 +36,12 @@ export function InvoiceTable({ invoices }: InvoiceTableProps) {
           <TableHead>Valor</TableHead>
           <TableHead>Tipo</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Obs.</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {invoices.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={8} className="text-center">
+            <TableCell colSpan={7} className="text-center">
               Nenhum documento cadastrado
             </TableCell>
           </TableRow>
@@ -70,20 +62,6 @@ export function InvoiceTable({ invoices }: InvoiceTableProps) {
               </TableCell>
               <TableCell className="capitalize">{invoice.type}</TableCell>
               <TableCell>{statusLabels[invoice.status]}</TableCell>
-              <TableCell>
-                {invoice.observations && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <InfoIcon className="h-4 w-4 text-blue-500" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="max-w-xs">{invoice.observations}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-              </TableCell>
             </TableRow>
           ))
         )}

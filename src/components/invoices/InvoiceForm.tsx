@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -32,7 +31,6 @@ const invoiceFormSchema = z.object({
   type: z.enum(["entrada", "saida"], {
     required_error: "Selecione o tipo da nota",
   }),
-  observations: z.string().optional(),
   status: z.enum(["enviada", "cancelada", "substituida", "aguardando_liberacao"], {
     required_error: "Selecione o status",
   }),
@@ -54,7 +52,6 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
       date: "",
       value: "",
       type: "entrada",
-      observations: "",
       status: "aguardando_liberacao",
     },
   });
@@ -188,24 +185,6 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
                     <SelectItem value="aguardando_liberacao">Aguardando Liberação</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="observations"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Observações</FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder="Digite aqui observações importantes sobre o documento..."
-                    className="min-h-[100px]"
-                    {...field}
-                  />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
