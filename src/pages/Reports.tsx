@@ -15,29 +15,29 @@ const Reports = () => {
     
     // Add logo
     const logoImg = new Image();
-    logoImg.src = "/lovable-uploads/97801385-0c15-4812-8957-d59242724b25.png";
-    doc.addImage(logoImg, "PNG", 20, 10, 30, 30);
+    logoImg.src = "/lovable-uploads/b3a70041-3d27-488b-9c16-aa504f409497.png";
+    doc.addImage(logoImg, "PNG", 87.5, 10, 35, 35); // Centered the logo and adjusted size
 
     // Add header text
     doc.setFontSize(16);
-    doc.text("Prefeitura de Marmeleiro", 105, 20, { align: "center" });
+    doc.text("Prefeitura de Marmeleiro", 105, 55, { align: "center" }); // Adjusted position after logo
     doc.setFontSize(10);
-    doc.text("Estado do Paraná - CNPJ 76.205.665/0001-01", 105, 27, { align: "center" });
-    doc.text("Av. Macali, 255 - Caixa Postal 24 - Fone/Fax (46) 3525-8100 - CEP 85.615-000", 105, 33, { align: "center" });
+    doc.text("Estado do Paraná - CNPJ 76.205.665/0001-01", 105, 62, { align: "center" });
+    doc.text("Av. Macali, 255 - Caixa Postal 24 - Fone/Fax (46) 3525-8100 - CEP 85.615-000", 105, 68, { align: "center" });
 
     // Add separator line
     doc.setLineWidth(0.5);
-    doc.line(20, 45, 190, 45);
+    doc.line(20, 75, 190, 75);
 
     // Add report content
     doc.setFontSize(12);
-    doc.text(`Data e hora de emissão: ${formattedDate}`, 20, 60);
-    doc.text("Setor: CONTABILIDADE", 20, 70);
+    doc.text(`Data e hora de emissão: ${formattedDate}`, 20, 90);
+    doc.text("Setor: CONTABILIDADE", 20, 100);
 
     // Add table headers
     doc.setFontSize(11);
     const headers = ["EMPRESA/MOTORISTA", "TIPO DOCUMENTO", "NÚMERO/QUANTIDADE"];
-    let y = 90;
+    let y = 120;
     doc.text(headers[0], 20, y);
     doc.text(headers[1], 90, y);
     doc.text(headers[2], 160, y);
