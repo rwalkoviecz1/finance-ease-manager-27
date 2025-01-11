@@ -2,6 +2,8 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { exportToCSV, importFromCSV } from "@/lib/indexedDB";
+import { Input } from "@/components/ui/input";
 
 const Reports = () => {
   const { toast } = useToast();
@@ -10,7 +12,6 @@ const Reports = () => {
     const now = new Date();
     const formattedDate = now.toLocaleString();
 
-    // Create new PDF document
     const doc = new jsPDF();
     
     // Add main logo
@@ -59,7 +60,7 @@ const Reports = () => {
 
     // Add signature field at the bottom
     y = 250;
-    doc.line(60, y, 150, y); // Signature line
+    doc.line(60, y, 150, y);
     doc.setFontSize(10);
     doc.text("Recebido por:", 60, y - 5);
     doc.text("Nome e assinatura", 85, y + 10);
@@ -74,6 +75,41 @@ const Reports = () => {
     });
   };
 
+  const handleExport = async () => {
+    try {
+      await exportToCSV();
+      toast({
+        title: "Dados exportados com sucesso!",
+        description: "O arquivo CSV foi baixado automaticamente.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao exportar dados",
+        description: "Ocorreu um erro ao exportar os dados.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      await importFromCSV(file);
+      toast({
+        title: "Dados importados com sucesso!",
+        description: "Os dados foram carregados no banco de dados local.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao importar dados",
+        description: "Ocorreu um erro ao importar os dados.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -84,10 +120,24 @@ const Reports = () => {
           </p>
         </div>
         
-        <div className="rounded-lg border p-4">
-          <Button onClick={generateReport}>
+        <div className="rounded-lg border p-4 space-y-4">
+          <Button onClick={generateReport} className="w-full">
             Finalizar e Gerar Relatório
           </Button>
+
+          <div className="flex gap-4">
+            <Button onClick={handleExport} variant="outline" className="flex-1">
+              Exportar Dados (CSV)
+            </Button>
+            <div className="flex-1">
+              <Input
+                type="file"
+                accept=".csv"
+                onChange={handleImport}
+                className="cursor-pointer"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
