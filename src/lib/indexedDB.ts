@@ -6,8 +6,27 @@ import { toast } from '@/components/ui/use-toast';
 
 const DB_NAME = 'marmeleiroDB';
 const DB_VERSION = 1;
+const DB_PATH_KEY = 'dbPath';
+
+export const getDatabasePath = () => {
+  return localStorage.getItem(DB_PATH_KEY);
+};
+
+export const setDatabasePath = (path: string) => {
+  localStorage.setItem(DB_PATH_KEY, path);
+};
 
 export const initDB = async () => {
+  const dbPath = getDatabasePath();
+  if (!dbPath) {
+    toast({
+      title: "Configuração necessária",
+      description: "Por favor, configure o diretório do banco de dados nas configurações.",
+      variant: "destructive",
+    });
+    return null;
+  }
+
   toast({
     title: "Bom dia pra você!",
     description: "Ótimo trabalho! Banco de dados carregando...",
@@ -15,7 +34,6 @@ export const initDB = async () => {
 
   const db = await openDB(DB_NAME, DB_VERSION, {
     upgrade(db) {
-      // Create stores if they don't exist
       if (!db.objectStoreNames.contains('dailyRates')) {
         db.createObjectStore('dailyRates', { keyPath: 'id' });
       }

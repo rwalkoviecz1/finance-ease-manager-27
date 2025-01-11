@@ -10,4 +10,5 @@ export interface Invoice {
   value: string;
   type: "entrada" | "saida";
   status: InvoiceStatus;
+  observations?: string;
 }
